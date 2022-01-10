@@ -1,114 +1,155 @@
 <?php
 
-use methods\DB;
+namespace methods;
+
+use PDOException;
 
 class InitializerDB extends DB {
-    static function migrate () {
-        self::create_tables();
-        self::create_column();
-        self::set_default_values();
+
+    public static function migrate_start () {
+        $pdo = self::connect_db();
+        self::create_tables($pdo);
+        self::set_default_values($pdo);
     }
 
-    static function create_tables() {
-        if(!self::exist_connect()) die('DB does not connect');
-        return false;
+    protected static function create_tables($pdo) {
+        try {
+            $pdo->exec("CREATE table  IF NOT EXISTS Vocabulary(
+                 ID INT( 11 ) AUTO_INCREMENT PRIMARY KEY,
+                 Word_origin VARCHAR( 50 ) NOT NULL, 
+                 Word_translate VARCHAR( 250 ) NOT NULL,
+                 User_id INT( 11 ) NOT NULL)");
+        } catch(PDOException $e) {
+            logs($e->getMessage());
+        }
     }
 
-    static function create_column() {
-       if(!self::exist_tables()) die('Table or tables do not create');
-    }
+    protected static function set_default_values($pdo) {
+        if($pdo->query('SELECT COUNT(*) AS Word_origin FROM Vocabulary')->fetchColumn() > 0) return false;
 
-    static function set_default_values() {
-        if(!self::exist_column()) die('Column or columns do not create');
-        [
+        $default_values = [
             [
-                'word_orig' => 'essentially',
-                'word_trans' => 'по суті'
+                'essentially',
+                'по суті',
+                1,
             ],
             [
-                'word_orig' => 'completely',
-                'word_trans' => 'повністю'
+                'completely',
+                'повністю',
+                1,
             ],
             [
-                'word_orig' => 'fancy',
-                'word_trans' => 'уява'
+                'fancy',
+                'уява',
+                1,
             ],
             [
-                'word_orig' => 'anxiety',
-                'word_trans' => 'занепокоєння'
+                'anxiety',
+                'занепокоєння',
+                1,
             ],
             [
-                'word_orig' => 'legitimacy',
-                'word_trans' => 'легітимність'
+                'legitimacy',
+                'легітимність',
+                1,
             ],
             [
-                'word_orig' => 'fear',
-                'word_trans' => 'страх'
+                'fear',
+                'страх',
+                1,
             ],
             [
-                'word_orig' => 'depicts',
-                'word_trans' => 'зображує'
+                'depicts',
+                'зображує',
+                1,
             ],
             [
-                'word_orig' => 'lie',
-                'word_trans' => 'брехати'
+                'lie',
+                'брехати',
+                1,
             ],
             [
-                'word_orig' => 'the reason',
-                'word_trans' => 'причина'
+                'the reason',
+                'причина',
+                1,
             ],
             [
-                'word_orig' => 'imagine',
-                'word_trans' => 'уявіть собі'
+                'imagine',
+                'уявіть собі',
+                1,
             ],
             [
-                'word_orig' => 'presently',
-                'word_trans' => 'зараз'
+                'presently',
+                'зараз',
+                1,
             ],
             [
-                'word_orig' => 'kept',
-                'word_trans' => 'збережено'
+                'kept',
+                'збережено',
+                1,
             ],
             [
-                'word_orig' => 'dwells',
-                'word_trans' => 'мешкає'
+                'dwells',
+                'мешкає',
+                1,
             ],
             [
-                'word_orig' => 'definitely',
-                'word_trans' => 'безумовно'
+                'definitely',
+                'безумовно',
+                1,
             ],
             [
-                'word_orig' => 'misled',
-                'word_trans' => 'введено в оману'
+                'misled',
+                'введено в оману',
+                1,
             ],
             [
-                'word_orig' => 'halt',
-                'word_trans' => 'зупинка'
+                'halt',
+                'зупинка',
+                1,
             ],
             [
-                'word_orig' => 'troubles',
-                'word_trans' => 'неприємності'
+                'troubles',
+                'неприємності',
+                1,
             ],
             [
-                'word_orig' => 'riddled',
-                'word_trans' => 'прорізаний'
+                'riddled',
+                'прорізаний',
+                1,
             ],
             [
-                'word_orig' => 'currently',
-                'word_trans' => 'на даний момент'
+                'currently',
+                'на даний момент',
+                1,
             ],
             [
-                'word_orig' => 'basically',
-                'word_trans' => 'в основному'
+                'basically',
+                'в основному',
+                1,
             ],
             [
-                'word_orig' => 'finally',
-                'word_trans' => 'нарешті'
+                'finally',
+                'нарешті',
+                1,
             ],
             [
-                'word_orig' => '',
-                'word_trans' => ''
+                '',
+                '',
+                1,
             ],
         ];
+
+        try {
+            $stmt = $pdo->prepare("INSERT INTO Vocabulary (Word_origin, Word_translate, User_id) VALUES (?, ?, ?)");
+            $pdo->beginTransaction();
+            foreach ($default_values as $i => $value) {
+                $stmt->execute($value);
+            }
+            $pdo->commit();
+
+        } catch(PDOException $e) {
+            logs($e->getMessage());
+        }
     }
 }

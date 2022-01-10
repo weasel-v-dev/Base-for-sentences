@@ -2,5 +2,7 @@
 namespace methods;
 
 abstract class BaseDB {
-    static $pdo;
+    public $table;
+    protected $column_origin;
+    protected $column_translate;
 }

@@ -10,4 +10,8 @@ class AppDB extends DB {
         self::exist_tables();
         return false;
     }
+
+    public static function set_value()
+    {
+    }
 }

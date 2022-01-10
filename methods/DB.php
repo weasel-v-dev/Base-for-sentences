@@ -9,8 +9,9 @@ class DB extends BaseDB
 {
     static function connect_db() {
         try {
-            self::$pdo = new PDO('mysql:host=localhost;dbname=cards_lang;charset=utf8;', 'root', 'root');
-            self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo = new PDO('mysql:host=localhost;dbname=cards_lang;charset=utf8;', 'root', 'root');
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $pdo;
             /***
             PDO::FETCH_CLASS - GET custom class object
 
@@ -36,6 +37,7 @@ class DB extends BaseDB
              */
         } catch(PDOException $e) {
             echo $e->getMessage();
+            die;
         }
     }
 
@@ -44,10 +46,6 @@ class DB extends BaseDB
     }
 
     static function exist_column() {
-
-    }
-
-    static function exist_connect() {
 
     }
 }
