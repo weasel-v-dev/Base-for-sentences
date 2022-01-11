@@ -1,6 +1,6 @@
 <?php
 
-namespace methods;
+namespace models;
 
 use PDOException;
 

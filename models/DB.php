@@ -1,11 +1,11 @@
 <?php
 
-namespace methods;
+namespace models;
 
 use PDO;
 use PDOException;
 
-class DB extends BaseDB
+class DB
 {
     static function connect_db() {
         try {
@@ -41,11 +41,5 @@ class DB extends BaseDB
         }
     }
 
-    static function exist_tables() {
 
-    }
-
-    static function exist_column() {
-
-    }
 }

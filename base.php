@@ -23,3 +23,6 @@ function logs($error) {
     }
     file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/logs/' . date('Y-m-d') . '-log.txt', $log . PHP_EOL, FILE_APPEND);
 }
+function home() {
+    return 'home';
+}
