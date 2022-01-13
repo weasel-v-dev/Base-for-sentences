@@ -1,6 +1,5 @@
 <?php
-require_once 'controllers/main.php';
-require_once 'methods/method.php';
+require_once 'app.php';
 ?>
 <!doctype html>
 <html lang="en">
@@ -47,12 +46,15 @@ require_once 'methods/method.php';
             </div>
             <div class="void"></div>
             <div class="row">
-                <div class="col-12">
-                    <form class="d-flex justify-content-center">
+                <div class="col-lg-2 col-md-6">
+<!--                    <div class="border border-success rounded h-100 w-100"></div>-->
+                </div>
+                <div class="col-lg-8 col-md-12">
+                    <form class=" needs-validation d-flex justify-content-center" novalidate>
                         <div>
                             <div class="mb-3">
                                 <label  for="exampleInputEmail1" class="form-label text-center">Enter words</label>
-                                <input type="text" class="form-control word-input" maxlength="30"  name="word">
+                                <input type="text" class="form-control word-input" maxlength="30"  name="word" required>
                                 <div class="form-text" >Wrong text!</div>
                             </div>
                             <div class="mb-3 form-check">
@@ -62,6 +64,9 @@ require_once 'methods/method.php';
                             <button type="button" class="btn btn-success w-100 submit">CHECK TRANSLATE</button>
                         </div>
                     </form>
+                </div>
+                <div class="col-lg-2 col-md-6">
+<!--                    <div class="border border-danger rounded h-100 w-100"></div>-->
                 </div>
             </div>
         </div>
