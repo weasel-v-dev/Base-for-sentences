@@ -13,7 +13,6 @@ class Request {
             value !== null &&
             value !== '' &&
             value.match(/^([^0-9]*)$/g)) {
-                console.log('validate_value');
                 this.error_text.style = 'display: none';
                 return true;
         } else {
@@ -27,24 +26,23 @@ class Request {
     }
 
     static similar_text (word_right, word_maybe_right) {
-        let result = false;
+        let result = 0;
         let text_send = 'word_truth='+word_right+'&word_maybe_truth='+word_maybe_right;
         this.requestToBack('POST', function (HTTP) {
             HTTP.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             HTTP.onreadystatechange = () => {
                 if(HTTP.readyState === 4 && HTTP.status === 200) {
                     result = HTTP.responseText;
-                    console.log(result);
                 }
             }
-        }, text_send);
+        }, text_send, false);
         return result;
     }
 
-    static requestToBack(method, callback, data = false) {
+    static requestToBack(method, callback, data = false, async = true) {
         let $this = this;
         const HTTP = new XMLHttpRequest();
-        HTTP.open(method, FULL_URL, true);
+        HTTP.open(method, FULL_URL, async);
         callback(HTTP);
         if(data) {
             HTTP.send(data);
@@ -56,7 +54,7 @@ class Request {
     static async eventSubmit() {
         let value = document.querySelector('.word-input').value;
         if(!this.validate_value(value)) return false;
-        console.log(this.similar_text(this.array_value[this.iteration].Word_origin, value));
+        // console.log(this.similar_text(this.array_value[this.iteration].Word_origin, value));
         if(this.similar_text(this.array_value[this.iteration].Word_origin, value)) {
             this.outputOnHtml('Truth');
             if(this.array_value.length > this.iteration) {
@@ -79,16 +77,10 @@ Request.requestToBack('GET', function (HTTP) {
     HTTP.responseType = "text";
     HTTP.onload = function() {
         if(HTTP.readyState === 4 && HTTP.status === 200) {
-            console.log(HTTP.responseText);
-            console.log(JSON.parse(HTTP.responseText));
+            // console.log(HTTP.responseText);
+            // console.log(JSON.parse(HTTP.responseText));
             Request.array_value = JSON.parse(HTTP.responseText);
             Request.outputOnHtml(Request.array_value[0].Word_translate);
         }
     };
 });
-
-
-
-// setTimeout(function () {
-//     word_output.innerHTML = HTTP.responseText === '1' ? 'Complete' : 'Wrong';
-// }, 1700);
