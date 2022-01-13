@@ -30,9 +30,9 @@ require_once 'app.php';
             font-size: 9rem;
             height: 173px;
         }
-        .form-text {
-            display: none;
-        }
+        /*.form-text {*/
+        /*    display: none;*/
+        /*}*/
     </style>
 </head>
 <body data-url="<?= MAIN_URL; ?>">
@@ -55,12 +55,12 @@ require_once 'app.php';
                             <div class="mb-3">
                                 <label  for="exampleInputEmail1" class="form-label text-center">Enter words</label>
                                 <input type="text" class="form-control word-input" maxlength="30"  name="word" required>
-                                <div class="form-text" >Wrong text!</div>
+                                <div class="form-text" ></div>
                             </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                            </div>
+<!--                            <div class="mb-3 form-check">-->
+<!--                                <input type="checkbox" class="form-check-input">-->
+<!--                                <label class="form-check-label" for="exampleCheck1">Check me out</label>-->
+<!--                            </div>-->
                             <button type="button" class="btn btn-success w-100 submit">CHECK TRANSLATE</button>
                         </div>
                     </form>

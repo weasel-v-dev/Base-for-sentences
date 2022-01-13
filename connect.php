@@ -15,7 +15,7 @@ switch($_SERVER['REQUEST_METHOD']) {
         }
         for ($i=0;$i<$strong_estimate;$i++) {
             if($length == similar_text(htmlspecialchars($_POST['word_truth']), htmlspecialchars($_POST['word_maybe_truth']))) {
-                echo 1;
+                echo $length;
                 break;
             }
             --$length;

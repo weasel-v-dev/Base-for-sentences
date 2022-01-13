@@ -13,10 +13,10 @@ class Request {
             value !== null &&
             value !== '' &&
             value.match(/^([^0-9]*)$/g)) {
-                this.error_text.style = 'display: none';
+                this.error_text.innerHTML = '';
                 return true;
         } else {
-            this.error_text.style = 'display: block';
+            this.error_text.innerHTML = 'Wrong text!';
             return false;
         }
     }
@@ -40,7 +40,6 @@ class Request {
     }
 
     static requestToBack(method, callback, data = false, async = true) {
-        let $this = this;
         const HTTP = new XMLHttpRequest();
         HTTP.open(method, FULL_URL, async);
         callback(HTTP);
@@ -51,19 +50,36 @@ class Request {
         }
     }
 
-    static async eventSubmit() {
-        let value = document.querySelector('.word-input').value;
-        if(!this.validate_value(value)) return false;
-        // console.log(this.similar_text(this.array_value[this.iteration].Word_origin, value));
-        if(this.similar_text(this.array_value[this.iteration].Word_origin, value)) {
-            this.outputOnHtml('Truth');
+    static async eventSubmit(btn) {
+        let input_word = document.querySelector('.word-input');
+        if(!this.validate_value(input_word.value)) return false;
+        if(this.array_value.length -1 <= this.iteration) {
+            console.log(this.array_value[this.iteration].Word_origin);
+            this.outputOnHtml('Over');
+            input_word.setAttribute('disabled', 'disabled');
+            btn.parentElement.innerHTML = '<a href="/" class="btn btn-success w-100 submit">Reload</a>';
+
+            return false;
+        }
+        let resultFromDB = this.similar_text(this.array_value[this.iteration].Word_origin, input_word.value);
+        if(resultFromDB) {
+            this.outputOnHtml('Success');
+
+            if(this.array_value[this.iteration].Word_origin.length > resultFromDB) {
+                this.error_text.innerHTML = this.array_value[this.iteration].Word_origin;
+            }
+
+            input_word.value = '';
+
             if(this.array_value.length > this.iteration) {
                 await new Promise(r => setTimeout(r, 2000));
+                this.error_text.innerHTML = '';
                 this.iteration++;
                 this.outputOnHtml(this.array_value[this.iteration].Word_translate);
             }
         } else {
             this.outputOnHtml('Wrong');
+            this.error_text.innerHTML = '';
             await new Promise(r => setTimeout(r, 2000));
             this.outputOnHtml(this.array_value[this.iteration].Word_translate);
         }
@@ -71,7 +87,7 @@ class Request {
 }
 
 document.querySelector('.submit').onclick = function () {
-    Request.eventSubmit();
+    Request.eventSubmit(this);
 }
 Request.requestToBack('GET', function (HTTP) {
     HTTP.responseType = "text";
