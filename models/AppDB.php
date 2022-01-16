@@ -23,7 +23,17 @@ class AppDB extends DB {
         return $array;
     }
 
-    public static function set_value()
+    public static function set_value($default_values)
     {
+        try {
+            $pdo = self::connect_db();
+            $stmt = $pdo->prepare("INSERT INTO Vocabulary (Word_origin, Word_translate, User_id) VALUES (?, ?, ?)");
+            $pdo->beginTransaction();
+            $stmt->execute($default_values);
+            $pdo->commit();
+
+        } catch(\PDOException $e) {
+            logs($e->getMessage());
+        }
     }
 }

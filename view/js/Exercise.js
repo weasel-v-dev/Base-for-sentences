@@ -1,33 +1,17 @@
-const BASE_URL = document.querySelector('body').getAttribute('data-url');
-const FULL_URL = BASE_URL + 'connect.php';
+import App from "./App.js";
 
-class Request {
-    static array_value;
+export default class Exercise extends App {
     static iteration = 0;
     static error_text = document.querySelector('.form-text');
     static word_output = document.querySelector('.word-output');
-
-    static validate_value(value) {
-        if(
-            value !== undefined &&
-            value !== null &&
-            value !== '' &&
-            value.match(/^([^0-9]*)$/g)) {
-                this.error_text.innerHTML = '';
-                return true;
-        } else {
-            this.error_text.innerHTML = 'Wrong text!';
-            return false;
-        }
-    }
 
     static outputOnHtml (text) {
         this.word_output.innerHTML = text;
     }
 
-    static similar_text (word_right, word_maybe_right) {
+    static get_similar_text (word_right, word_maybe_right) {
         let result = 0;
-        let text_send = 'word_truth='+word_right+'&word_maybe_truth='+word_maybe_right;
+        let text_send = `word_truth=${word_right}&word_maybe_truth=${word_maybe_right}`;
         this.requestToBack('POST', HTTP => {
             HTTP.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             HTTP.onreadystatechange = () => {
@@ -39,29 +23,17 @@ class Request {
         return result;
     }
 
-    static requestToBack(method, callback, data = false, async = true) {
-        const HTTP = new XMLHttpRequest();
-        HTTP.open(method, FULL_URL, async);
-        callback(HTTP);
-        if(data) {
-            HTTP.send(data);
-        } else {
-            HTTP.send();
-        }
-    }
-
-    static async eventSubmit(btn) {
+    static async eventSimilar(btn) {
         let input_word = document.querySelector('.word-input');
-        if(!this.validate_value(input_word.value)) return false;
+        if(!this.validate_value(input_word.value, this.error_text)) return false;
         if(this.array_value.length -1 <= this.iteration) {
-            console.log(this.array_value[this.iteration].Word_origin);
             await new Promise(r => setTimeout(r, 2000));
             this.outputOnHtml('Over');
             input_word.setAttribute('disabled', 'disabled');
             btn.parentElement.innerHTML = '<a href="/" class="btn btn-success w-100 submit">Reload</a>';
             return false;
         }
-        let resultFromDB = this.similar_text(this.array_value[this.iteration].Word_origin, input_word.value);
+        let resultFromDB = this.get_similar_text(this.array_value[this.iteration].Word_origin, input_word.value);
         if(resultFromDB) {
             this.outputOnHtml('Success');
 
@@ -86,16 +58,3 @@ class Request {
     }
 }
 
-document.querySelector('.submit').onclick = function() {
-    Request.eventSubmit(this);
-};
-
-Request.requestToBack('GET', HTTP => {
-    HTTP.responseType = "text";
-    HTTP.onload = () => {
-        if(HTTP.readyState === 4 && HTTP.status === 200) {
-            Request.array_value = JSON.parse(HTTP.responseText);
-            Request.outputOnHtml(Request.array_value[Request.iteration].Word_translate);
-        }
-    };
-});

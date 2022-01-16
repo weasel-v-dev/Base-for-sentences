@@ -10,8 +10,7 @@ require_once 'app.php';
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Cards</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <style>
+   <style>
         body {
             padding: 0;
             margin: 0;
@@ -30,9 +29,79 @@ require_once 'app.php';
             font-size: 9rem;
             height: 173px;
         }
-        /*.form-text {*/
-        /*    display: none;*/
-        /*}*/
+        .outside {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #173416a6;
+            height: 100%;
+            z-index: 11111;
+            visibility: hidden;
+            opacity: 0;
+
+            transition: .4s ease;
+        }
+
+        .inside {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            transition: .4s ease;
+            overflow-y: scroll;
+        }
+
+
+        .custom-modal {
+            padding: 30px;
+            background: white;
+            max-width: 1200px;
+            position: relative;
+            top: 25%;
+            transform: translate(-50%, 0);
+            left: 50%;
+
+
+
+            /*visibility: hidden;*/
+            /*opacity: 0;*/
+
+            /*transition: visibility 0.25s linear 0.33s, opacity 0.33s linear;*/
+        }
+
+        .show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .show-top {
+            top: -5%;
+            height: 105%;
+        }
+
+
+        .table th {
+            vertical-align: middle;
+        }
+        .mr-1 {
+            margin-right: 1rem;
+        }
+        .pc-0-5 {
+            padding: 0.5rem;
+        }
+        .exit {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            left: 50%;
+            top: -60px;
+            transform: translateX(-50%);
+        }
+
+
+
     </style>
 </head>
 <body data-url="<?= MAIN_URL; ?>">
@@ -47,7 +116,9 @@ require_once 'app.php';
             <div class="void"></div>
             <div class="row">
                 <div class="col-lg-2 col-md-6">
-<!--                    <div class="border border-success rounded h-100 w-100"></div>-->
+                    <div class="border border-success rounded h-100 w-100">
+                        <button class="btn btn-primary open-modal">Add words</button>
+                    </div>
                 </div>
                 <div class="col-lg-8 col-md-12">
                     <form class=" needs-validation d-flex justify-content-center" novalidate>
@@ -72,8 +143,11 @@ require_once 'app.php';
         </div>
     </div>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-<script src="/view/request.js"></script>
+<?php require_once 'modal.php'?>
+<script type="module" src="/view/js/App.js"></script>
+<script type="module" src="/view/js/Exercise.js"></script>
+<script type="module" src="/view/js/Aggregate.js"></script>
+
+<script type="module" src="/view/js/main.js"></script>
 </body>
 </html>
