@@ -28,7 +28,7 @@ class Request {
     static similar_text (word_right, word_maybe_right) {
         let result = 0;
         let text_send = 'word_truth='+word_right+'&word_maybe_truth='+word_maybe_right;
-        this.requestToBack('POST', function (HTTP) {
+        this.requestToBack('POST', HTTP => {
             HTTP.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             HTTP.onreadystatechange = () => {
                 if(HTTP.readyState === 4 && HTTP.status === 200) {
@@ -55,10 +55,10 @@ class Request {
         if(!this.validate_value(input_word.value)) return false;
         if(this.array_value.length -1 <= this.iteration) {
             console.log(this.array_value[this.iteration].Word_origin);
+            await new Promise(r => setTimeout(r, 2000));
             this.outputOnHtml('Over');
             input_word.setAttribute('disabled', 'disabled');
             btn.parentElement.innerHTML = '<a href="/" class="btn btn-success w-100 submit">Reload</a>';
-
             return false;
         }
         let resultFromDB = this.similar_text(this.array_value[this.iteration].Word_origin, input_word.value);
@@ -86,17 +86,16 @@ class Request {
     }
 }
 
-document.querySelector('.submit').onclick = function () {
+document.querySelector('.submit').onclick = function() {
     Request.eventSubmit(this);
-}
-Request.requestToBack('GET', function (HTTP) {
+};
+
+Request.requestToBack('GET', HTTP => {
     HTTP.responseType = "text";
-    HTTP.onload = function() {
+    HTTP.onload = () => {
         if(HTTP.readyState === 4 && HTTP.status === 200) {
-            // console.log(HTTP.responseText);
-            // console.log(JSON.parse(HTTP.responseText));
             Request.array_value = JSON.parse(HTTP.responseText);
-            Request.outputOnHtml(Request.array_value[0].Word_translate);
+            Request.outputOnHtml(Request.array_value[Request.iteration].Word_translate);
         }
     };
 });

@@ -134,8 +134,8 @@ class InitializerDB extends DB {
                 1,
             ],
             [
-                '',
-                '',
+                'relate',
+                'відноситись',
                 1,
             ],
         ];
