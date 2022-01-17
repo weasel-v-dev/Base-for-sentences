@@ -4,8 +4,6 @@ const FULL_URL = BASE_URL + 'connect.php';
 export default class App {
     static array_value;
 
-
-
     static validate_value(value, exitMessage) {
         if(
             value !== undefined &&

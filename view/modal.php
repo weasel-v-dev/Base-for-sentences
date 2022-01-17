@@ -21,12 +21,15 @@
                         <tr>
                             <td>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Original" aria-label="Username" aria-describedby="basic-addon1">
+                                    <input type="text" class="form-control word_orig-input" placeholder="Original" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                                <div class="word_orig-error"></div>
+                            </td>
+                            <td>
+                                <div class="input-group">
+                                    <input type="text" class="form-control word_trans-input" placeholder="Translate" aria-label="Username" aria-describedby="basic-addon1">
                                 </div>
                             </td>
-                            <td><div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Translate" aria-label="Username" aria-describedby="basic-addon1">
-                                </div></td>
                             <td>
                                 <button type="button" class="btn btn-success w-100 submit-add-word">Add word</button>
                             </td>
@@ -39,14 +42,14 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Original</th>
-                                <th scope="col">Translate</th>
-                                <th scope="col">Update</th>
-                                <th scope="col">Remove</th>
+                                <th scope="col">Original word</th>
+                                <th scope="col">Translate word</th>
+                                <th scope="col">Update word</th>
+                                <th scope="col">Remove word</th>
                             </tr>
                         </thead>
                         <tbody class="request-output-words">
-
+                            <tr></tr>
                         </tbody>
                     </table>
                 </form>
