@@ -8,17 +8,47 @@ switch($_SERVER['REQUEST_METHOD']) {
         echo \controllers\HomeController::index();
     break;
     case 'POST' :
-        $length = strlen(htmlspecialchars($_POST['word_truth']));
-        $strong_estimate = 3;
-        if($length < 5) {
-            $strong_estimate = 1;
+
+        $id = (int) htmlspecialchars($_POST['id']);
+
+        if(!empty($id)) {
+            \models\AppDB::remove_word($id);
+            echo 'remove orig';
+            die;
         }
-        for ($i=0;$i<$strong_estimate;$i++) {
-            if($length == similar_text(htmlspecialchars($_POST['word_truth']), htmlspecialchars($_POST['word_maybe_truth']))) {
-                echo 1;
-                break;
+
+        $word_orig = htmlspecialchars($_POST['word_orig']);
+        $word_trans = htmlspecialchars($_POST['word_trans']);
+        $word_id = htmlspecialchars($_POST['word_id']);
+
+        if(!empty($word_orig) && !empty($word_trans) && !empty($word_id)) {
+            print_r([$word_orig, $word_trans, $word_id]);
+            echo \models\AppDB::update_word([$word_orig, $word_trans, $word_id]);
+            die;
+        }
+
+        if(!empty($word_orig) && !empty($word_trans)) {
+            echo \models\AppDB::set_word([$word_orig, $word_trans, 1]);
+            die;
+        }
+
+        $word_truth = htmlspecialchars($_POST['word_truth']);
+        $word_maybe_truth = htmlspecialchars($_POST['word_maybe_truth']);
+        if(!empty($word_truth) && !empty($word_maybe_truth)) {
+            echo 'check word truth and word maybe truth';
+            $length = strlen(htmlspecialchars($word_truth));
+            $strong_estimate = 3;
+            if($length < 5) {
+                $strong_estimate = 1;
             }
-            --$length;
+            for ($i=0;$i<$strong_estimate;$i++) {
+                if($length == similar_text($word_truth, $word_maybe_truth)) {
+                    echo $length;
+                    break;
+                }
+                --$length;
+            }
+            die;
         }
     break;
 }

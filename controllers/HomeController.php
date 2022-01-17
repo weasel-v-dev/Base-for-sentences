@@ -8,7 +8,7 @@ use models\AppDB;
 class HomeController
 {
     static function index () {
-        return self::request(AppDB::get_values());
+        return self::request(AppDB::get_words());
     }
 
     static function request ($array) {
