@@ -6,7 +6,9 @@ App.requestToBack('GET', HTTP => {
     HTTP.responseType = "text";
     HTTP.onload = () => {
         if(HTTP.readyState === 4 && HTTP.status === 200) {
+            console.log(HTTP.responseText);
             let data = JSON.parse(HTTP.responseText);
+
             App.array_value = data;
             Exercise.outputOnHtml(Exercise.array_value[Exercise.iteration].Word_translate);
             Aggregate.get_words(data);

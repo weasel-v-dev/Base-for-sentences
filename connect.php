@@ -5,7 +5,7 @@ require_once 'models/AppDB.php';
 
 switch($_SERVER['REQUEST_METHOD']) {
     case 'GET' :
-        echo \controllers\HomeController::index();
+        echo \controllers\HomeController::index(['number_page' => 1, 'count_elements_on_page' => 10]);
     break;
     case 'POST' :
 

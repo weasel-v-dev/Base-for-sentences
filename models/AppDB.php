@@ -2,16 +2,19 @@
 namespace models;
 
 class AppDB extends DB {
-    static function fill_DB($table, $column, $value) {
-        
+
+    private static function paginationCalculate ($number_page, $count_elements_on_page) {
+        return ($number_page -1) * $count_elements_on_page;
     }
 
-    static function get_words() {
+    public static function get_words($values) {
         try {
             $array = [];
             $pdo = self::connect_db();
-            $stmt = $pdo->prepare('SELECT id, Word_origin, Word_translate FROM Vocabulary WHERE User_id = ?');
-            $stmt->execute([1]);
+            $stmt = $pdo->prepare("SELECT id, Word_origin, Word_translate FROM Vocabulary LIMIT :from_number, :num;");
+            $stmt->bindParam(':num', $values['count_elements_on_page'], $pdo::PARAM_INT);
+            $stmt->bindParam(':from_number', self::paginationCalculate($values['number_page'], $values['count_elements_on_page']), $pdo::PARAM_INT);
+            $stmt->execute();
 
             while ($row = $stmt->fetch($pdo::FETCH_ASSOC)) {
                 $array[] = $row;

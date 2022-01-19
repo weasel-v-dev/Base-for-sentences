@@ -4,7 +4,7 @@
             <button class="btn border-0 exit rounded-circle bg-dark text-white">
                <span> &#x2715</span>
             </button>
-            <table class="row">
+            <div class="row">
                 <form class="col-12">
                     <div class="d-flex">
                         <div class="pc-0-5 w-100">
@@ -53,6 +53,19 @@
                         </tbody>
                     </table>
                 </form>
+                <div class="col-12" >
+
+                    <nav  class="d-flex">
+                        <ul class="pagination m-auto">
+                            <li class="page-item disabled"><span class="page-link page-link-previous">Previous</span></li>
+                            <li class="page-item active"><span class="page-link">1</span></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link page-link-next" href="#">Next</a></li>
+                        </ul>
+                    </nav>
+
+                </div>
             </div>
         </div>
     </div>
