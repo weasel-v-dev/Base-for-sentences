@@ -25,7 +25,7 @@ class InitializerDB extends DB {
     }
 
     protected static function set_default_values($pdo) {
-        if($pdo->query('SELECT COUNT(*) AS Word_origin FROM Vocabulary')->fetchColumn() > 0) return false;
+        if(self::get_all_count_words_from_DB($pdo)) return false;
 
         $default_values = [
             [

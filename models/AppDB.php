@@ -23,7 +23,7 @@ class AppDB extends DB {
             logs($e->getMessage());
             return false;
         }
-        return $array;
+        return ['few_words' => $array, 'all_count_words' => ceil(self::get_all_count_words_from_DB($pdo) / $values['count_elements_on_page'] )];
     }
 
     public static function set_word($default_value)

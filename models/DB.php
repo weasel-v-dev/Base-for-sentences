@@ -7,7 +7,7 @@ use PDOException;
 
 class DB
 {
-    static function connect_db() {
+    protected static function connect_db() {
         try {
             $pdo = new PDO('mysql:host=localhost;dbname=cards_lang;charset=utf8;', 'root', 'root');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -39,6 +39,10 @@ class DB
             echo $e->getMessage();
             die;
         }
+    }
+
+    protected static function get_all_count_words_from_DB ($pdo) {
+        return $pdo->query('SELECT COUNT(*) AS Word_origin FROM Vocabulary')->fetchColumn();
     }
 
 

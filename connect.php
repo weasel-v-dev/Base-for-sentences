@@ -9,6 +9,13 @@ switch($_SERVER['REQUEST_METHOD']) {
     break;
     case 'POST' :
 
+        $number_page = htmlspecialchars($_POST['number_page']);
+        $count_elements_on_page = htmlspecialchars($_POST['count_elements_on_page']);
+
+        if(!empty($number_page) && !empty($count_elements_on_page)) {
+            echo \controllers\HomeController::index(['number_page' => $number_page, 'count_elements_on_page' => $count_elements_on_page]);
+        }
+
         $id = (int) htmlspecialchars($_POST['id']);
 
         if(!empty($id)) {
