@@ -80,3 +80,8 @@ li.page-item {
 li.page-item.disabled, li.page-item.active {
     cursor: auto;
 }
+.page-link {
+    min-width: 44px;
+    text-align: center;
+}
+

@@ -39,25 +39,43 @@ export default class Aggregate extends App {
 
 
     static generatePagination(current_button) {
-        let html_pagination = ``,
-            dots_show = this.count_buttons > 8,
+        //Todo change name status_button_- variable
+        let html_pagination = [],
+            dots_show = this.count_buttons > 11,
             dots_once = true,
             status_button_prev = current_button <= 1 ? 'disabled' : '',
             status_button_next = current_button >= this.count_buttons ? 'disabled' : '';
-        html_pagination += `<li class="page-item ${status_button_prev}" ${status_button_prev}><span class="page-link page-link-previous" ${status_button_prev}>Previous</span></li>`;
+
+
+        html_pagination[0] = `<li class="page-item ${status_button_prev}" ${status_button_prev}><span class="page-link page-link-previous" ${status_button_prev}>Previous</span></li>`;
         for (let i = 1; i <= this.count_buttons; i++) {
-            if (dots_show ===  true && (i >= 6) && (i <= (this.count_buttons - (6 - 1)))) {
+            if(i === current_button && current_button > 2 && current_button < this.count_buttons - 1) {
+                html_pagination[i - 1] = `<li class="page-item"><span class="page-link near-active" style="background: red">${current_button - 1}</span></li>`;
+                html_pagination[i] = `<li class="page-item active"><span class="page-link">${current_button}</span></li>`;
+                html_pagination[++i] = `<li class="page-item"><span class="page-link near-active" style="background: greenyellow">${current_button + 1}</span></li>`;
+                ++i;
+                dots_once = true;
+            }
+
+            if (dots_show ===  true && current_button !== i && (i >= 4) && (i <= (this.count_buttons - (4 - 1)))) {
                 if(dots_once ===  true) {
-                    html_pagination += `<li class="page-item"><span class="page-link">...</span></li>`;
+                    html_pagination[i] = `<li class="page-item disabled"><span class="page-link disabled">...</span></li>`;
                     dots_once = false;
                 }
                 continue;
             }
-            html_pagination += `<li class="page-item ${i === current_button ? 'active' : ''}"><span class="page-link">${i}</span></li>`;
-        }
-        html_pagination += `<li class="page-item ${status_button_next}" ${status_button_next}><span class="page-link page-link-next"  ${status_button_next}>Next</span></li>`;
 
-        return html_pagination;
+            html_pagination[i] = `<li class="page-item ${i === current_button ? 'active' : ''}"><span class="page-link">${i}</span></li>`;
+
+        }
+        html_pagination.push(`<li class="page-item ${status_button_next}" ${status_button_next}><span class="page-link page-link-next"  ${status_button_next}>Next</span></li>`);
+
+        let result_html = '';
+        html_pagination.forEach(function (element) {
+            result_html += element;
+        });
+
+        return result_html;
     }
 
     static eventInsert() {
@@ -111,27 +129,25 @@ export default class Aggregate extends App {
 
     static eventPagination(button) {
         let current_button = button.querySelector('.page-link').innerText,
-            count_elements_on_page = 10;
-
+            count_elements_on_page = 15;
 
         switch (current_button) {
-            case 'Previous' :
+            case 'Previous' : {
                 current_button =  parseInt(document.querySelector('.pagination .active .page-link').innerText);
-
-                console.log(current_button);
                 if(current_button > 1) {
                     current_button--;
                 }
-
                 break;
-            case 'Next' :
+            }
+            case 'Next' : {
                 current_button =  parseInt(document.querySelector('.pagination .active .page-link').innerText);
-
                 if(current_button < this.count_buttons) {
                     current_button++;
                 }
                 break;
+            }
         }
+
         this.writePagination(parseInt(current_button));
 
         return this.request(`number_page=${current_button}&count_elements_on_page=${count_elements_on_page}`, function () {});

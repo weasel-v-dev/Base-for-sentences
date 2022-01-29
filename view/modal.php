@@ -1,5 +1,5 @@
-<div class="outside">
-    <div class="inside">
+<div class="outside  show">
+    <div class="inside  show-top">
         <div class="custom-modal border rounded">
             <button class="btn border-0 exit rounded-circle bg-dark text-white">
                <span> &#x2715</span>
@@ -53,7 +53,7 @@
                 </form>
                 <div class="col-12" >
                     <nav  class="d-flex">
-                        <ul class="pagination m-auto"></ul>
+                        <ul class="pagination m-auto"><h1>Loading...</h1></ul>
                     </nav>
                 </div>
             </div>
