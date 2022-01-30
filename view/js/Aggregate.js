@@ -3,25 +3,25 @@ import App from "./App.js";
 export default class Aggregate extends App {
     static count_buttons = 0;
 
-    static async writeWords(words) {
+    static writeWords(words) {
         let $this = this;
         document.querySelector('.request-output-words').innerHTML = '<tr></tr>';
         words.forEach(function (e) {
-            document.querySelector('.request-output-words tr').insertAdjacentHTML("beforeBegin", $this.generate_words(e));
+            document.querySelector('.request-output-words tr').insertAdjacentHTML("beforebegin", $this.generate_words(e));
         });
     }
 
-    static generate_words(e) {
+    static generate_words(item) {
          return `
-            <th data-id="${e.id}"><span>\(^⌂^)/</span></th>
+            <th data-id="${item.id}"><span>\(^⌂^)/</span></th>
             <td>
                 <div class="input-group">
-                    <input type="text" class="form-control word_orig-input-edit" placeholder="Original" aria-label="Username" value="${e.Word_origin}">
+                    <input type="text" class="form-control word_orig-input-edit" placeholder="Original" aria-label="Username" value="${item.word_origin}">
                 </div>
             </td>
             <td>
                 <div class="input-group">
-                    <input type="text" class="form-control word_trans-input-edit" placeholder="Translate" aria-label="Username" value="${e.Word_translate}">
+                    <input type="text" class="form-control word_trans-input-edit" placeholder="Translate" aria-label="Username" value="${item.word_translate}">
                 </div>
             </td>
             <td>
@@ -39,7 +39,6 @@ export default class Aggregate extends App {
 
 
     static generatePagination(current_button) {
-        //Todo change name status_button_- variable
         let html_pagination = [],
             dots_show = this.count_buttons > 11,
             dots_once = true,
@@ -70,19 +69,12 @@ export default class Aggregate extends App {
         }
         html_pagination.push(`<li class="page-item ${status_button_next}" ${status_button_next}><span class="page-link page-link-next"  ${status_button_next}>Next</span></li>`);
 
-        let result_html = '';
-        html_pagination.forEach(function (element) {
-            result_html += element;
-        });
-
-        return result_html;
+        return html_pagination.join('');
     }
 
     static eventInsert() {
-        let user_value = this.get_user_value(),
-            data_send = `word_orig=${user_value.Word_origin}&word_trans=${user_value.Word_translate}`;
-
-        return this.request(data_send,  () => {});
+        let user_value = this.get_user_value();
+        return this.request(`word_orig=${user_value.word_origin}&word_trans=${user_value.word_translate}`,  () => {});
     }
 
     static get_user_value() {
@@ -90,7 +82,7 @@ export default class Aggregate extends App {
             word_trans = document.querySelector('.word_trans-input').value,
             error_text = document.querySelector('.word_orig-error');
         if(!this.validate_value(word_orig, error_text)) return false;
-        return {'Word_origin' : word_orig, 'Word_translate': word_trans};
+        return {'word_origin' : word_orig, 'word_translate': word_trans};
     }
 
     static eventDelete(element) {
@@ -108,7 +100,7 @@ export default class Aggregate extends App {
         let word_orig = element.closest('tr').querySelector('.word_orig-input-edit'),
             word_trans = element.closest('tr').querySelector('.word_trans-input-edit'),
             word_id = element.closest('tr').querySelector('th').getAttribute('data-id');
-        return this.request(`word_id=${word_id}&word_orig=${word_orig.value}&word_trans=${word_trans.value}`, function () {});
+        return this.request(`word_id=${word_id}&word_orig=${word_orig.value}&word_trans=${word_trans.value}`, () => {});
     }
 
     static request(data_send, cleanInputs) {
@@ -150,7 +142,7 @@ export default class Aggregate extends App {
 
         this.writePagination(parseInt(current_button));
 
-        return this.request(`number_page=${current_button}&count_elements_on_page=${count_elements_on_page}`, function () {});
+        return this.request(`number_page=${current_button}&count_elements_on_page=${count_elements_on_page}`, () => {});
     }
 
 }

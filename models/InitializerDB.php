@@ -16,8 +16,8 @@ class InitializerDB extends DB {
         try {
             $pdo->exec("CREATE table  IF NOT EXISTS Vocabulary(
                  ID INT( 11 ) AUTO_INCREMENT PRIMARY KEY,
-                 Word_origin VARCHAR( 50 ) NOT NULL, 
-                 Word_translate VARCHAR( 250 ) NOT NULL,
+                 word_origin VARCHAR( 50 ) NOT NULL, 
+                 word_translate VARCHAR( 250 ) NOT NULL,
                  User_id INT( 11 ) NOT NULL)");
         } catch(PDOException $e) {
             logs($e->getMessage());
@@ -141,7 +141,7 @@ class InitializerDB extends DB {
         ];
 
         try {
-            $stmt = $pdo->prepare("INSERT INTO Vocabulary (Word_origin, Word_translate, User_id) VALUES (?, ?, ?)");
+            $stmt = $pdo->prepare("INSERT INTO Vocabulary (word_origin, word_translate, User_id) VALUES (?, ?, ?)");
             $pdo->beginTransaction();
             foreach ($default_values as $i => $value) {
                 $stmt->execute($value);

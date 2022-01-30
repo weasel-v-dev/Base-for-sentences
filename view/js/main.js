@@ -8,7 +8,7 @@ App.requestToBack('GET', HTTP => {
         if(HTTP.readyState === 4 && HTTP.status === 200) {
             let data = JSON.parse(HTTP.responseText);
             App.array_value = data['few_words'];
-            Exercise.outputOnHtml(Exercise.array_value[Exercise.iteration].Word_translate);
+            Exercise.outputOnHtml(Exercise.array_value[Exercise.iteration].word_translate);
             Aggregate.writeWords(data['few_words']);
             Aggregate.count_buttons = data['all_count_words'];
             Aggregate.writePagination(1);
@@ -23,7 +23,7 @@ function render() {
 
             let obj = Aggregate.get_user_value();
             obj.id = id;
-            document.querySelector('.request-output-words tr').insertAdjacentHTML("beforeBegin", Aggregate.generate_words(obj));
+            document.querySelector('.request-output-words tr').insertAdjacentHTML("beforebegin", Aggregate.generate_words(obj));
             document.querySelector('.word_orig-input').value = '';
             document.querySelector('.word_trans-input').value = '';
             render();
@@ -44,33 +44,34 @@ function render() {
         document.querySelector('.outside').classList.remove('show');
     };
 
-    document.querySelectorAll('.submit-remove-word').forEach( function(e)  {
-        e.onclick = function() {
-            Aggregate.eventDelete(this).then(e => {
-                // console.log(e);
+    document.querySelectorAll('.submit-remove-word').forEach( function(element)  {
+        element.onclick = function() {
+            Aggregate.eventDelete(this).then(response => {
+                console.log(response);
             })
         }
     });
 
-    document.querySelectorAll('.submit-update-word').forEach( function(e)  {
-        e.onclick = function() {
-            Aggregate.eventUpdate(this).then(e => {
-                // console.log(e);
+    document.querySelectorAll('.submit-update-word').forEach( function(element)  {
+        element.onclick = function() {
+            Aggregate.eventUpdate(this).then(response => {
+                console.log(response);
             })
         }
     });
 
-    document.querySelectorAll('.pagination .page-item').forEach( function(e)  {
+    document.querySelectorAll('.pagination .page-item').forEach( function(element)  {
 
-        e.onclick = function() {
+        element.onclick = function() {
             console.log('LOADING...');
             Aggregate.eventPagination(this).then(data => {
-                data = JSON.parse(data);
-                App.array_value = data['few_words'];
-                Aggregate.writeWords(data['few_words']);
-                console.log('LOADED');
-                render();
-
+                if(typeof data === "string") {
+                    data = JSON.parse(data);
+                    App.array_value = data['few_words'];
+                    Aggregate.writeWords(data['few_words']);
+                    console.log('LOADED');
+                    render();
+                }
             })
         }
     });

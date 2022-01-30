@@ -33,12 +33,12 @@ export default class Exercise extends App {
             btn.parentElement.innerHTML = '<a href="/" class="btn btn-success w-100 submit">Reload</a>';
             return false;
         }
-        let resultFromDB = this.get_similar_text(this.array_value[this.iteration].Word_origin, input_word.value);
+        let resultFromDB = this.get_similar_text(this.array_value[this.iteration].word_origin, input_word.value);
         if(resultFromDB) {
             this.outputOnHtml('Success');
 
-            if(this.array_value[this.iteration].Word_origin.length > resultFromDB) {
-                this.error_text.innerHTML = this.array_value[this.iteration].Word_origin;
+            if(this.array_value[this.iteration].word_origin.length > resultFromDB) {
+                this.error_text.innerHTML = this.array_value[this.iteration].word_origin;
             }
 
             input_word.value = '';
@@ -47,13 +47,13 @@ export default class Exercise extends App {
                 await new Promise(r => setTimeout(r, 2000));
                 this.error_text.innerHTML = '';
                 this.iteration++;
-                this.outputOnHtml(this.array_value[this.iteration].Word_translate);
+                this.outputOnHtml(this.array_value[this.iteration].word_translate);
             }
         } else {
             this.outputOnHtml('Wrong');
             this.error_text.innerHTML = '';
             await new Promise(r => setTimeout(r, 2000));
-            this.outputOnHtml(this.array_value[this.iteration].Word_translate);
+            this.outputOnHtml(this.array_value[this.iteration].word_translate);
         }
     }
 }

@@ -42,7 +42,7 @@ class DB
     }
 
     protected static function get_all_count_words_from_DB ($pdo) {
-        return $pdo->query('SELECT COUNT(*) AS Word_origin FROM Vocabulary')->fetchColumn();
+        return $pdo->query('SELECT COUNT(*) AS word_origin FROM Vocabulary')->fetchColumn();
     }
 
 
