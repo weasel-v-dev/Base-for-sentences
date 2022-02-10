@@ -74,7 +74,7 @@ export default class Aggregate extends App {
 
     static eventInsert() {
         let user_value = this.get_user_value();
-        return this.request(`word_orig=${user_value.word_origin}&word_trans=${user_value.word_translate}`,  () => {});
+        return this.request(`word_orig=${user_value.word_origin}&word_trans=${user_value.word_translate}`);
     }
 
     static get_user_value() {
@@ -100,23 +100,7 @@ export default class Aggregate extends App {
         let word_orig = element.closest('tr').querySelector('.word_orig-input-edit'),
             word_trans = element.closest('tr').querySelector('.word_trans-input-edit'),
             word_id = element.closest('tr').querySelector('th').getAttribute('data-id');
-        return this.request(`word_id=${word_id}&word_orig=${word_orig.value}&word_trans=${word_trans.value}`, () => {});
-    }
-
-    static request(data_send, cleanInputs) {
-        return new Promise((resolve, reject) => {
-            this.requestToBack('POST', HTTP => {
-                HTTP.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                HTTP.onreadystatechange = () => {
-                    if(HTTP.readyState === 4 && HTTP.status === 200) {
-                        resolve(HTTP.responseText);
-                        cleanInputs();
-                    } else {
-                        reject('Error upload')
-                    }
-                }
-            }, data_send, false);
-        });
+        return this.request(`word_id=${word_id}&word_orig=${word_orig.value}&word_trans=${word_trans.value}`);
     }
 
     static eventPagination(button) {
@@ -142,7 +126,7 @@ export default class Aggregate extends App {
 
         this.writePagination(parseInt(current_button));
 
-        return this.request(`number_page=${current_button}&count_elements_on_page=${count_elements_on_page}`, () => {});
+        return this.request(`number_page=${current_button}&count_elements_on_page=${count_elements_on_page}`);
     }
 
 }

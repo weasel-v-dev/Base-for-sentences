@@ -8,7 +8,6 @@ switch($_SERVER['REQUEST_METHOD']) {
         echo \controllers\HomeController::index(['number_page' => 1, 'count_elements_on_page' => 15]);
     break;
     case 'POST' :
-
         $number_page = htmlspecialchars($_POST['number_page']);
         $count_elements_on_page = htmlspecialchars($_POST['count_elements_on_page']);
 
@@ -20,7 +19,6 @@ switch($_SERVER['REQUEST_METHOD']) {
 
         if(!empty($id)) {
             \models\AppDB::remove_word($id);
-            echo 'remove orig';
             die;
         }
 
@@ -42,7 +40,6 @@ switch($_SERVER['REQUEST_METHOD']) {
         $word_truth = htmlspecialchars($_POST['word_truth']);
         $word_maybe_truth = htmlspecialchars($_POST['word_maybe_truth']);
         if(!empty($word_truth) && !empty($word_maybe_truth)) {
-            echo 'check word truth and word maybe truth';
             $length = strlen(htmlspecialchars($word_truth));
             $strong_estimate = 3;
             if($length < 5) {
@@ -57,6 +54,7 @@ switch($_SERVER['REQUEST_METHOD']) {
             }
             die;
         }
+
     break;
 }
 

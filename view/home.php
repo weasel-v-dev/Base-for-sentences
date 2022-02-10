@@ -24,28 +24,19 @@ require_once 'app.php';
             <div class="void"></div>
             <div class="row">
                 <div class="col-lg-2 col-md-6">
-                    <div class="border border-success rounded h-100 w-100">
-                        <button class="btn btn-primary open-modal">Add words</button>
-                    </div>
+                    <button class="btn btn-primary open-modal">Add words</button>
                 </div>
                 <div class="col-lg-8 col-md-12">
-                    <form class=" needs-validation d-flex justify-content-center" novalidate>
+                    <div class=" needs-validation d-flex justify-content-center" novalidate>
                         <div>
                             <div class="mb-3">
                                 <label  for="exampleInputEmail1" class="form-label text-center">Enter words</label>
                                 <input type="text" class="form-control word-input" maxlength="30"  name="word" required>
                                 <div class="form-text" ></div>
                             </div>
-<!--                            <div class="mb-3 form-check">-->
-<!--                                <input type="checkbox" class="form-check-input">-->
-<!--                                <label class="form-check-label" for="exampleCheck1">Check me out</label>-->
-<!--                            </div>-->
-                            <button type="button" class="btn btn-success w-100 submit">CHECK TRANSLATE</button>
+                            <button class="btn btn-success w-100 submit">CHECK TRANSLATE</button>
                         </div>
-                    </form>
-                </div>
-                <div class="col-lg-2 col-md-6">
-<!--                    <div class="border border-danger rounded h-100 w-100"></div>-->
+                    </div>
                 </div>
             </div>
         </div>
@@ -55,7 +46,6 @@ require_once 'app.php';
 <script type="module" src="/view/js/App.js"></script>
 <script type="module" src="/view/js/Exercise.js"></script>
 <script type="module" src="/view/js/Aggregate.js"></script>
-
 <script type="module" src="/view/js/main.js"></script>
 </body>
 </html>

@@ -7,8 +7,8 @@ App.requestToBack('GET', HTTP => {
     HTTP.onload = () => {
         if(HTTP.readyState === 4 && HTTP.status === 200) {
             let data = JSON.parse(HTTP.responseText);
-            App.array_value = data['few_words'];
-            Exercise.outputOnHtml(Exercise.array_value[Exercise.iteration].word_translate);
+            App.data_words = data['few_words'];
+            Exercise.outputOnHtml(Exercise.data_words[Exercise.iteration].word_translate);
             Aggregate.writeWords(data['few_words']);
             Aggregate.count_buttons = data['all_count_words'];
             Aggregate.writePagination(1);
@@ -20,10 +20,9 @@ App.requestToBack('GET', HTTP => {
 function render() {
     document.querySelector('.submit-add-word').onclick = function() {
         Aggregate.eventInsert().then(id => {
-
-            let obj = Aggregate.get_user_value();
-            obj.id = id;
-            document.querySelector('.request-output-words tr').insertAdjacentHTML("beforebegin", Aggregate.generate_words(obj));
+            document.querySelector('.request-output-words tr').insertAdjacentHTML("beforebegin", Aggregate.generate_words(
+                Aggregate.get_user_value().id = id
+            ));
             document.querySelector('.word_orig-input').value = '';
             document.querySelector('.word_trans-input').value = '';
             render();
@@ -31,7 +30,7 @@ function render() {
     };
 
     document.querySelector('.submit').onclick = function() {
-        Exercise.eventSimilar(this).then(r => console.log(r));
+        Exercise.eventSimilar(this);
     };
 
     document.querySelector('.open-modal').onclick = function() {
@@ -67,7 +66,7 @@ function render() {
             Aggregate.eventPagination(this).then(data => {
                 if(typeof data === "string") {
                     data = JSON.parse(data);
-                    App.array_value = data['few_words'];
+                    App.data_words = data['few_words'];
                     Aggregate.writeWords(data['few_words']);
                     console.log('LOADED');
                     render();
