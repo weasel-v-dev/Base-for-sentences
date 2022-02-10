@@ -74,3 +74,14 @@ main {
     top: -60px;
     transform: translateX(-50%);
 }
+li.page-item {
+    cursor: pointer;
+}
+li.page-item.disabled, li.page-item.active {
+    cursor: auto;
+}
+.page-link {
+    min-width: 44px;
+    text-align: center;
+}
+

@@ -11,7 +11,7 @@ class AppDB extends DB {
         try {
             $array = [];
             $pdo = self::connect_db();
-            $stmt = $pdo->prepare("SELECT id, Word_origin, Word_translate FROM Vocabulary LIMIT :from_number, :num;");
+            $stmt = $pdo->prepare("SELECT id, word_origin, word_translate FROM Vocabulary ORDER BY id DESC LIMIT :from_number, :num;");
             $stmt->bindParam(':num', $values['count_elements_on_page'], $pdo::PARAM_INT);
             $stmt->bindParam(':from_number', self::paginationCalculate($values['number_page'], $values['count_elements_on_page']), $pdo::PARAM_INT);
             $stmt->execute();
@@ -23,14 +23,14 @@ class AppDB extends DB {
             logs($e->getMessage());
             return false;
         }
-        return $array;
+        return ['few_words' => $array, 'all_count_words' => ceil(self::get_all_count_words_from_DB($pdo) / $values['count_elements_on_page'] )];
     }
 
     public static function set_word($default_value)
     {
         try {
             $pdo = self::connect_db();
-            $stmt = $pdo->prepare("INSERT INTO Vocabulary (Word_origin, Word_translate, User_id) VALUES (?, ?, ?)");
+            $stmt = $pdo->prepare("INSERT INTO Vocabulary (word_origin, word_translate, User_id) VALUES (?, ?, ?)");
             $pdo->beginTransaction();
             $stmt->execute($default_value);
             echo $pdo->lastInsertId();
@@ -59,7 +59,7 @@ class AppDB extends DB {
     {
         try {
             $pdo = self::connect_db();
-            $stmt = $pdo->prepare('UPDATE Vocabulary SET Word_origin = ?, Word_translate = ? WHERE id = ?');
+            $stmt = $pdo->prepare('UPDATE Vocabulary SET word_origin = ?, word_translate = ? WHERE id = ?');
 
             $stmt->execute($value);
 
