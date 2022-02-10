@@ -7,7 +7,7 @@ export default class Aggregate extends App {
         let $this = this;
         document.querySelector('.request-output-words').innerHTML = '<tr></tr>';
         words.forEach(function (e) {
-            document.querySelector('.request-output-words tr').insertAdjacentHTML("beforebegin", $this.generate_words(e));
+            document.querySelector('.request-output-words').insertAdjacentHTML("beforeend", $this.generate_words(e));
         });
     }
 
