@@ -22,7 +22,9 @@ function render() {
         Aggregate.eventInsert().then(id => {
             let objectWord = Aggregate.get_user_value();
             objectWord.id = id;
-            document.querySelector('.request-output-words tr').insertAdjacentHTML("beforeBegin", Aggregate.generate_words(objectWord));
+            if (Aggregate.current_button === 1) {
+                document.querySelector('.request-output-words tr').insertAdjacentHTML("beforeBegin", Aggregate.generate_words(objectWord));
+            }
             document.querySelector('.word_orig-input').value = '';
             document.querySelector('.word_trans-input').value = '';
             render();

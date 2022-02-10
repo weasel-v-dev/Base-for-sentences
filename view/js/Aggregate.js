@@ -2,6 +2,7 @@ import App from "./App.js";
 
 export default class Aggregate extends App {
     static count_buttons = 0;
+    static current_button = 1;
 
     static writeWords(words) {
         let $this = this;
@@ -44,7 +45,6 @@ export default class Aggregate extends App {
             dots_once = true,
             status_button_prev = current_button <= 1 ? 'disabled' : '',
             status_button_next = current_button >= this.count_buttons ? 'disabled' : '';
-
 
         html_pagination[0] = `<li class="page-item ${status_button_prev}" ${status_button_prev}><span class="page-link page-link-previous" ${status_button_prev}>Previous</span></li>`;
         for (let i = 1; i <= this.count_buttons; i++) {
@@ -125,6 +125,7 @@ export default class Aggregate extends App {
         }
 
         this.writePagination(parseInt(current_button));
+        this.current_button = parseInt(current_button);
 
         return this.request(`number_page=${current_button}&count_elements_on_page=${count_elements_on_page}`);
     }
