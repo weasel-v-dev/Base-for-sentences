@@ -10,7 +10,6 @@ export default class Exercise extends App {
     }
 
     static async getSimilarText(word_right, word_maybe_right) {
-        console.log(`word_truth=${word_right}&word_maybe_truth=${word_maybe_right}`);
         return await this.request(`word_truth=${word_right}&word_maybe_truth=${word_maybe_right}`);
     }
 
@@ -20,6 +19,7 @@ export default class Exercise extends App {
         if(!this.validate_value(input_word.value, this.error_text)) {
             return false;
         }
+
         /*
         * If all words are complete then show reload button
         */

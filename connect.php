@@ -13,6 +13,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
         if(!empty($number_page) && !empty($count_elements_on_page)) {
             echo \controllers\HomeController::index(['number_page' => $number_page, 'count_elements_on_page' => $count_elements_on_page]);
+            die;
         }
 
         $id = (int) htmlspecialchars($_POST['id']);
@@ -37,6 +38,15 @@ switch($_SERVER['REQUEST_METHOD']) {
             die;
         }
 
+
+        $word_search = htmlspecialchars($_POST['word_search']);
+        $word_search ? $word_search : ' ';
+        if(!empty($word_search)) {
+            echo \controllers\HomeController::index(['number_page' => 1, 'count_elements_on_page' => 15],
+                "WHERE word_origin LIKE '%".$word_search."%' OR word_translate LIKE '%".$word_search."%'");
+            die;
+        }
+
         $word_truth = htmlspecialchars($_POST['word_truth']);
         $word_maybe_truth = htmlspecialchars($_POST['word_maybe_truth']);
         if(!empty($word_truth) && !empty($word_maybe_truth)) {
@@ -54,7 +64,7 @@ switch($_SERVER['REQUEST_METHOD']) {
             }
             die;
         }
-
+        die;
     break;
 }
 

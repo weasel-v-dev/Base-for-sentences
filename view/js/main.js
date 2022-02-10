@@ -35,6 +35,19 @@ function render() {
         Exercise.eventSimilar(this);
     };
 
+    document.querySelector('.submit-search').onclick = () => {
+        Aggregate.eventSearch().then(words => {
+            if(typeof words === "string") {
+                console.log(words);
+                words = JSON.parse(words);
+                App.data_words = words['few_words'];
+                Aggregate.writeWords(words['few_words']);
+                Aggregate.count_buttons = words['all_count_words'];
+                Aggregate.writePagination(1);
+            }
+        });
+    };
+
     document.querySelector('.open-modal').onclick = function() {
         document.querySelector('.inside').classList.add('show-top');
         document.querySelector('.outside').classList.add('show');

@@ -48,6 +48,7 @@ export default class Aggregate extends App {
 
         html_pagination[0] = `<li class="page-item ${status_button_prev}" ${status_button_prev}><span class="page-link page-link-previous" ${status_button_prev}>Previous</span></li>`;
         for (let i = 1; i <= this.count_buttons; i++) {
+            console.log('a');
             if(i === current_button && current_button > 2 && current_button < this.count_buttons - 1) {
                 html_pagination[i - 1] = `<li class="page-item"><span class="page-link near-active" style="background: red">${current_button - 1}</span></li>`;
                 html_pagination[i] = `<li class="page-item active"><span class="page-link">${current_button}</span></li>`;
@@ -130,5 +131,9 @@ export default class Aggregate extends App {
         return this.request(`number_page=${current_button}&count_elements_on_page=${count_elements_on_page}`);
     }
 
+    static  eventSearch() {
+        console.log(document.querySelector('.word_search').value);
+        return  this.request(`word_search=${document.querySelector('.word_search').value}`);
+    }
 }
 

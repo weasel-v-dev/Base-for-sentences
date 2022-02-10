@@ -1,5 +1,8 @@
 <?php
+
 namespace models;
+
+
 
 class AppDB extends DB {
 
@@ -7,11 +10,11 @@ class AppDB extends DB {
         return ($number_page -1) * $count_elements_on_page;
     }
 
-    public static function get_words($values) {
+    public static function get_words($values, $where) {
         try {
             $array = [];
             $pdo = self::connect_db();
-            $stmt = $pdo->prepare("SELECT id, word_origin, word_translate FROM Vocabulary ORDER BY id DESC LIMIT :from_number, :num;");
+            $stmt = $pdo->prepare("SELECT id, word_origin, word_translate FROM Vocabulary ".$where." ORDER BY id DESC LIMIT :from_number, :num;");
             $stmt->bindParam(':num', $values['count_elements_on_page'], $pdo::PARAM_INT);
             $stmt->bindParam(':from_number', self::paginationCalculate($values['number_page'], $values['count_elements_on_page']), $pdo::PARAM_INT);
             $stmt->execute();
@@ -20,10 +23,10 @@ class AppDB extends DB {
                 $array[] = $row;
             }
         } catch (\Exception $e) {
-            logs($e->getMessage());
+            echo ($e->getMessage());
             return false;
         }
-        return ['few_words' => $array, 'all_count_words' => ceil(self::get_all_count_words_from_DB($pdo) / $values['count_elements_on_page'] )];
+        return ['few_words' => $array, 'all_count_words' => ceil(self::get_all_count_words_from_DB($pdo, $where) / $values['count_elements_on_page'] )];
     }
 
     public static function set_word($default_value)

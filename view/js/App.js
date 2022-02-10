@@ -28,7 +28,7 @@ export default class App {
                 HTTP.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 HTTP.onreadystatechange = () => {
                     if(HTTP.readyState === 4 && HTTP.status === 200) {
-                        console.log(HTTP.responseText);
+                        // console.log(HTTP.responseText);
                         resolve(HTTP.responseText);
                         cleanInputs();
                     } else {
