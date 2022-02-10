@@ -20,9 +20,9 @@ App.requestToBack('GET', HTTP => {
 function render() {
     document.querySelector('.submit-add-word').onclick = function() {
         Aggregate.eventInsert().then(id => {
-            document.querySelector('.request-output-words tr').insertAdjacentHTML("beforebegin", Aggregate.generate_words(
-                Aggregate.get_user_value().id = id
-            ));
+            let objectWord = Aggregate.get_user_value();
+            objectWord.id = id;
+            document.querySelector('.request-output-words tr').insertAdjacentHTML("beforeBegin", Aggregate.generate_words(objectWord));
             document.querySelector('.word_orig-input').value = '';
             document.querySelector('.word_trans-input').value = '';
             render();
