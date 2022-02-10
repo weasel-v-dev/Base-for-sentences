@@ -47,6 +47,9 @@ function render() {
 
     document.querySelectorAll('.submit-remove-word').forEach( function(element)  {
         element.onclick = function() {
+            if(!confirm("Are you sure you want to delete the word?")){
+                return false;
+            }
             Aggregate.eventDelete(this).then(response => {
                 console.log(response);
             })
