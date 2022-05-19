@@ -131,7 +131,7 @@ export default class Aggregate extends App {
         return this.request(`number_page=${current_button}&count_elements_on_page=${count_elements_on_page}`);
     }
 
-    static  eventSearch() {
+    static eventSearch() {
         console.log(document.querySelector('.word_search').value);
         return  this.request(`word_search=${document.querySelector('.word_search').value}`);
     }

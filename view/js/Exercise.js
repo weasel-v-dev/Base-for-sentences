@@ -32,22 +32,21 @@ export default class Exercise extends App {
         }
 
         this.getSimilarText(this.data_words[this.iteration].word_origin, input_word.value).then(async resultFromDB => {
+            console.log(this.data_words[this.iteration].word_origin);
             if(resultFromDB) {
                 this.outputOnHtml('Success');
-
                 if(this.data_words[this.iteration].word_origin.length > resultFromDB) {
                     this.error_text.innerHTML = this.data_words[this.iteration].word_origin;
                 }
-
                 input_word.value = '';
-
                 if(this.data_words.length > this.iteration) {
                     await new Promise(r => setTimeout(r, 2000));
                     this.error_text.innerHTML = '';
                     this.iteration++;
                     this.outputOnHtml(this.data_words[this.iteration].word_translate);
                 }
-            } else {
+            }
+            else {
                 this.outputOnHtml('Wrong');
                 this.error_text.innerHTML = '';
                 await new Promise(r => setTimeout(r, 2000));

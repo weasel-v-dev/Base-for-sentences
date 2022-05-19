@@ -53,10 +53,20 @@
                         <tbody class="request-output-words"></tbody>
                     </table>
                 </form>
-                <div class="col-12" >
+                <div class="col-12">
                     <nav  class="d-flex">
                         <ul class="pagination m-auto"><h1>Loading...</h1></ul>
                     </nav>
+                </div>
+                <div class="d-flex flex-wrap justify-content-center mt-3"> 
+                    <iframe src="https://assets.pinterest.com/ext/embed.html?id=40743571618930429" height="509" width="236" frameborder="0" scrolling="no" autoplay></iframe>
+                    <iframe src="https://assets.pinterest.com/ext/embed.html?id=1114007657799931158" height="520" width="236" frameborder="0" scrolling="no" autoplay ></iframe>
+                    <iframe src="https://assets.pinterest.com/ext/embed.html?id=657595983106093733" height="454" width="236" frameborder="0" scrolling="no" ></iframe>
+                    <iframe src="https://assets.pinterest.com/ext/embed.html?id=3448137205849707" height="475" width="236" frameborder="0" scrolling="no" ></iframe>
+                    <iframe src="https://assets.pinterest.com/ext/embed.html?id=971722057072974515" height="520" width="236" frameborder="0" scrolling="no" ></iframe>
+                    <iframe src="https://assets.pinterest.com/ext/embed.html?id=2955555997080775" height="434" width="236" frameborder="0" scrolling="no" ></iframe>
+                    <iframe src="https://assets.pinterest.com/ext/embed.html?id=1266706134064221" height="524" width="236" frameborder="0" scrolling="no" ></iframe>
+                    <iframe src="https://assets.pinterest.com/ext/embed.html?id=192106740345997911" height="572" width="236" frameborder="0" scrolling="no" ></iframe>
                 </div>
             </div>
         </div>
